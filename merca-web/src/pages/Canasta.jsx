@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useCanasta } from '../hooks/useCanasta';
 import CanastaItem from '../components/canasta/CanastaItem';
 import CanastaResumen from '../components/canasta/CanastaResumen';
+import CanastaConsolidar from '../components/canasta/CanastaConsolidar';
 import SEOHead from '../components/shared/SEOHead';
 
 export default function Canasta() {
@@ -48,8 +49,9 @@ export default function Canasta() {
               />
             ))}
           </div>
-          <div className="lg:sticky lg:top-20 self-start">
+          <div className="lg:sticky lg:top-20 self-start space-y-4">
             <CanastaResumen items={items} />
+            <CanastaConsolidar items={items} />
           </div>
         </div>
       )}
