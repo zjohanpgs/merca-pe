@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { STORES, STORE_MAP } from '../../lib/stores';
 import { normalize } from '../../lib/normalize';
 import { formatPrice } from '../../utils/format';
-import { withUtm } from '../../lib/utm';
 
 const NOISE = new Set([
   'bolsa', 'paquete', 'pack', 'caja', 'botella', 'lata', 'sobre',
@@ -100,10 +99,7 @@ export default function CanastaConsolidar({ items }) {
     }
     if (!params.toString()) return null;
     params.set('redirect', 'true');
-    return withUtm(
-      store.baseUrl + '/checkout/cart/add?' + params.toString(),
-      { campaign: 'canasta_consolidar' }
-    );
+    return store.baseUrl + '/checkout/cart/add?' + params.toString();
   }
 
   const storeName = targetStore ? (STORE_MAP[targetStore]?.name || targetStore) : '';

@@ -1,6 +1,5 @@
 import { formatPrice } from '../../utils/format';
 import { STORE_MAP } from '../../lib/stores';
-import { withUtm } from '../../lib/utm';
 
 export default function CanastaResumen({ items }) {
   if (!items.length) return null;
@@ -40,10 +39,7 @@ export default function CanastaResumen({ items }) {
       }
     }
     params.set('redirect', 'true');
-    return withUtm(
-      `${store.baseUrl}/checkout/cart/add?${params.toString()}`,
-      { campaign: 'canasta' }
-    );
+    return `${store.baseUrl}/checkout/cart/add?${params.toString()}`;
   }
 
   return (
