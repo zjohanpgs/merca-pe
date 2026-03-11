@@ -100,7 +100,6 @@ export default function CanastaConsolidar({ items }) {
     }
     if (!params.toString()) return null;
     params.set('redirect', 'true');
-    params.set('sc', '1');
     return withUtm(
       store.baseUrl + '/checkout/cart/add?' + params.toString(),
       { campaign: 'canasta_consolidar' }
