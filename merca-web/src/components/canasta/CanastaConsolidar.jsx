@@ -3,6 +3,8 @@ import { STORES, STORE_MAP } from '../../lib/stores';
 import { normalize } from '../../lib/normalize';
 import { formatPrice } from '../../utils/format';
 
+const CART_SUPPORTED = new Set(['metro', 'plazavea']);
+
 const NOISE = new Set([
   'bolsa', 'paquete', 'pack', 'caja', 'botella', 'lata', 'sobre',
   'bandeja', 'frasco', 'doypack', 'tetrapack', 'sixpack',
@@ -87,6 +89,7 @@ export default function CanastaConsolidar({ items }) {
   }
 
   function buildConsolidatedCartUrl(storeId, foundItems) {
+    if (!CART_SUPPORTED.has(storeId)) return null;
     const store = STORE_MAP[storeId];
     if (!store) return null;
     const params = new URLSearchParams();
@@ -142,21 +145,31 @@ export default function CanastaConsolidar({ items }) {
 
       {results && !loading && (
         <div className="space-y-3">
-          {results.found.length > 0 && (
-            <div>
-              <p className="text-sm font-semibold text-green-400 mb-2">
-                {results.found.length} producto{results.found.length !== 1 ? 's' : ''} encontrado{results.found.length !== 1 ? 's' : ''}
-              </p>
-              <div className="space-y-1">
-                {results.found.map((f, i) => (
-                  <div key={i} className="flex items-center justify-between text-xs py-1 border-b border-slate-700/50">
-                    <span className="text-slate-300 truncate mr-2">
-                      {f.qty > 1 ? f.qty + 'x ' : ''}{f.match.name}
-                    </span>
-                    <span className="text-slate-200 shrink-0">{formatPrice(f.match.price * f.qty)}</span>
-                  </div>
-                ))}
+{results.found.length > 0 && (
+            <div className="pt-3 border-t border-slate-700">
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-slate-400 text-sm">Total en {storeName}</span>
+                <span className="text-lg font-bold text-merca-400">{formatPrice(totalFound)}</span>
               </div>
+              {cartUrl ? (
+                <a
+                  href={cartUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`block w-full py-3 text-center text-sm font-bold text-white rounded-lg ${bgMap[targetStore] || 'bg-slate-600'} hover:opacity-90 transition-opacity`}
+                >
+                  Armar carrito en {storeName} &rarr;
+                </a>
+              ) : (
+                <a
+                  href={STORE_MAP[targetStore]?.baseUrl || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full py-3 text-center text-sm font-medium text-slate-400 rounded-lg bg-slate-700 hover:bg-slate-650 transition-colors"
+                >
+                  Ir a {storeName} (agregar manualmente) &rarr;
+                </a>
+              )}
             </div>
           )}
 
