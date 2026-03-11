@@ -81,7 +81,7 @@ export default function Product() {
     <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
       <SEOHead
         title={`${product.name} — Precio en supermercados`}
-        description={`${product.name} desde ${cheapest ? formatPrice(Number(cheapest.price)) : ''} — compara precios en Metro, Plaza Vea y Wong.`}
+        description={`${product.name} desde ${cheapest ? formatPrice(Number(cheapest.price)) : ''} — compara precios en Metro y Plaza Vea.`}
         jsonLd={jsonLd}
       />
 

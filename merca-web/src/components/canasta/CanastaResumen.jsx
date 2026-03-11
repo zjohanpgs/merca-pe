@@ -1,9 +1,6 @@
 import { formatPrice } from '../../utils/format';
 import { STORE_MAP } from '../../lib/stores';
 
-// Wong does not support /checkout/cart/add (returns 500)
-const CART_SUPPORTED = new Set(['metro', 'plazavea']);
-
 export default function CanastaResumen({ items }) {
   if (!items.length) return null;
 
@@ -21,11 +18,10 @@ export default function CanastaResumen({ items }) {
   const cheapestStore = entries[0]?.[0];
   const totalAll = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
-  const colorMap = { metro: 'border-metro', plazavea: 'border-plazavea', wong: 'border-wong' };
-  const bgMap = { metro: 'bg-metro', plazavea: 'bg-plazavea', wong: 'bg-wong' };
+  const colorMap = { metro: 'border-metro', plazavea: 'border-plazavea' };
+  const bgMap = { metro: 'bg-metro', plazavea: 'bg-plazavea' };
 
   function buildCartUrl(storeId) {
-    if (!CART_SUPPORTED.has(storeId)) return null;
     const store = STORE_MAP[storeId];
     if (!store) return null;
     const storeItems = storeGroups[storeId]?.items || [];
@@ -79,7 +75,7 @@ export default function CanastaResumen({ items }) {
                 ))}
               </div>
 
-              {cartUrl ? (
+              {cartUrl && (
                 <a
                   href={cartUrl}
                   target="_blank"
@@ -87,15 +83,6 @@ export default function CanastaResumen({ items }) {
                   className={`block w-full py-2.5 text-sm font-semibold text-white text-center ${bgMap[storeId] || 'bg-slate-600'} hover:opacity-90 transition-opacity`}
                 >
                   Armar carrito en {store?.name} &rarr;
-                </a>
-              ) : (
-                <a
-                  href={`${store?.baseUrl || '#'}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full py-2.5 text-sm font-medium text-slate-400 text-center bg-slate-700 hover:bg-slate-650 transition-colors"
-                >
-                  Ir a {store?.name} &rarr;
                 </a>
               )}
             </div>
@@ -113,7 +100,7 @@ export default function CanastaResumen({ items }) {
       )}
 
       <p className="text-xs text-slate-600 text-center">
-        Metro y Plaza Vea soportan carrito directo. Wong requiere agregar manualmente.
+        Al hacer click se agregan los productos al carrito real de la tienda
       </p>
     </div>
   );

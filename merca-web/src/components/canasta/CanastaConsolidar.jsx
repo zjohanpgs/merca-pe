@@ -3,7 +3,6 @@ import { STORES, STORE_MAP } from '../../lib/stores';
 import { normalize } from '../../lib/normalize';
 import { formatPrice } from '../../utils/format';
 
-const CART_SUPPORTED = new Set(['metro', 'plazavea']);
 
 const NOISE = new Set([
   'bolsa', 'paquete', 'pack', 'caja', 'botella', 'lata', 'sobre',
@@ -89,7 +88,6 @@ export default function CanastaConsolidar({ items }) {
   }
 
   function buildConsolidatedCartUrl(storeId, foundItems) {
-    if (!CART_SUPPORTED.has(storeId)) return null;
     const store = STORE_MAP[storeId];
     if (!store) return null;
     const params = new URLSearchParams();
@@ -109,8 +107,8 @@ export default function CanastaConsolidar({ items }) {
   const cartUrl = results ? buildConsolidatedCartUrl(targetStore, results.found) : null;
   const totalFound = results ? results.found.reduce((s, f) => s + f.match.price * f.qty, 0) : 0;
 
-  const bgMap = { metro: 'bg-metro', plazavea: 'bg-plazavea', wong: 'bg-wong' };
-  const borderMap = { metro: 'border-metro', plazavea: 'border-plazavea', wong: 'border-wong' };
+  const bgMap = { metro: 'bg-metro', plazavea: 'bg-plazavea' };
+  const borderMap = { metro: 'border-metro', plazavea: 'border-plazavea' };
 
   return (
     <div className="bg-slate-800 rounded-xl p-6 mt-4">

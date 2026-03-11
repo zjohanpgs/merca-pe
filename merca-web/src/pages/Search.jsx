@@ -17,7 +17,7 @@ export default function Search() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <SEOHead
         title={query ? `${query} — Comparar precios` : 'Buscar productos'}
-        description={query ? `Compara precios de "${query}" en Metro, Plaza Vea y Wong.` : undefined}
+        description={query ? `Compara precios de "${query}" en Metro y Plaza Vea.` : undefined}
       />
 
       {loading && <LoadingSpinner />}

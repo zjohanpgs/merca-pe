@@ -3,7 +3,6 @@ import { STORE_MAP } from '../../lib/stores';
 const colorMap = {
   metro: 'bg-metro',
   plazavea: 'bg-plazavea',
-  wong: 'bg-wong',
 };
 
 export default function StoreBadge({ storeId, className = '' }) {

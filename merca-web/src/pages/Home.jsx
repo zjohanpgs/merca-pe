@@ -28,7 +28,7 @@ export default function Home() {
         <span className="text-merca-400">3 supermercados</span>
       </h1>
       <p className="text-slate-400 text-center text-lg mb-10 max-w-xl">
-        Busca cualquier producto y compara precios al instante entre Metro, Plaza Vea y Wong.
+        Busca cualquier producto y compara precios al instante entre Metro y Plaza Vea.
       </p>
 
       <form onSubmit={handleSearch} className="w-full max-w-xl flex gap-2 mb-8">

@@ -5,7 +5,7 @@ export default function Footer() {
         <p className="font-semibold text-slate-400 mb-1">
           Merca<span className="text-merca-400">.pe</span>
         </p>
-        <p>Compara precios de Metro, Plaza Vea y Wong en un solo lugar.</p>
+        <p>Compara precios de Metro y Plaza Vea en un solo lugar.</p>
         <p className="mt-2">Los precios mostrados son referenciales y pueden variar.</p>
       </div>
     </footer>

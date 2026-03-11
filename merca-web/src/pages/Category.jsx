@@ -42,7 +42,7 @@ export default function Category() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <SEOHead
         title={`${categoryName} — Precios de supermercados`}
-        description={`Compara precios de ${categoryName} en Metro, Plaza Vea y Wong. Encuentra el mejor precio.`}
+        description={`Compara precios de ${categoryName} en Metro y Plaza Vea. Encuentra el mejor precio.`}
         jsonLd={jsonLd}
       />
 

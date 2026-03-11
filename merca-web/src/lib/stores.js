@@ -15,14 +15,6 @@ export const STORES = [
     colorClass: 'bg-plazavea',
     textClass: 'text-plazavea',
   },
-  {
-    id: 'wong',
-    name: 'Wong',
-    baseUrl: 'https://www.wong.pe',
-    color: '#7c3aed',
-    colorClass: 'bg-wong',
-    textClass: 'text-wong',
-  },
 ];
 
 export const STORE_MAP = Object.fromEntries(STORES.map((s) => [s.id, s]));

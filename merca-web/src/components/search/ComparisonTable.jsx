@@ -5,8 +5,8 @@ export default function ComparisonTable({ results }) {
   const rows = buildComparison(results);
   if (!rows.length) return null;
 
-  const storeIds = ['metro', 'plazavea', 'wong'];
-  const storeNames = { metro: 'Metro', plazavea: 'Plaza Vea', wong: 'Wong' };
+  const storeIds = ['metro', 'plazavea'];
+  const storeNames = { metro: 'Metro', plazavea: 'Plaza Vea' };
 
   return (
     <section className="mb-8">

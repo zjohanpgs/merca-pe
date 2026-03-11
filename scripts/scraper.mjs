@@ -16,7 +16,6 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 const STORES = [
   { id: 'metro',    name: 'Metro',     base: 'https://www.metro.pe' },
   { id: 'plazavea', name: 'Plaza Vea', base: 'https://www.plazavea.com.pe' },
-  { id: 'wong',     name: 'Wong',      base: 'https://www.wong.pe' },
 ];
 
 const PRODUCTS_PER_QUERY = 50;

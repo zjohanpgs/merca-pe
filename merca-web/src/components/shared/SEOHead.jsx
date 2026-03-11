@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 const BASE_URL = 'https://merca.pe';
 const DEFAULT_TITLE = 'Merca.pe — Compara precios de supermercados en Peru';
-const DEFAULT_DESC = 'Compara precios de Metro, Plaza Vea y Wong al instante. Encuentra las mejores ofertas en alimentos y productos de supermercado.';
+const DEFAULT_DESC = 'Compara precios de Metro y Plaza Vea al instante. Encuentra las mejores ofertas en alimentos y productos de supermercado.';
 
 export default function SEOHead({ title, description, jsonLd }) {
   const { pathname } = useLocation();

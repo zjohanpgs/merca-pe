@@ -11,7 +11,7 @@ export function buildComparison(results) {
     for (const p of r.products) {
       const key = makeKey(p.name, p.brand);
       if (!map[key]) {
-        map[key] = { label: p.name, image: p.image, metro: null, plazavea: null, wong: null };
+        map[key] = { label: p.name, image: p.image, metro: null, plazavea: null };
       }
       if (!map[key][r.store] || p.price < map[key][r.store].price) {
         map[key][r.store] = { price: p.price, image: p.image };
@@ -24,7 +24,7 @@ export function buildComparison(results) {
   }
 
   return Object.values(map)
-    .filter((row) => [row.metro, row.plazavea, row.wong].filter(Boolean).length >= 2)
+    .filter((row) => [row.metro, row.plazavea].filter(Boolean).length >= 2)
     .sort((a, b) => a.label.localeCompare(b.label))
     .slice(0, 20);
 }

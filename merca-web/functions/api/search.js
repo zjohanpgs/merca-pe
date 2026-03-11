@@ -1,8 +1,10 @@
 const STORES = [
   { id: 'metro',     name: 'Metro',     base: 'https://www.metro.pe' },
   { id: 'plazavea',  name: 'Plaza Vea', base: 'https://www.plazavea.com.pe' },
-  { id: 'wong',      name: 'Wong',      base: 'https://www.wong.pe' },
 ];
+
+const PAGE_SIZE = 50;
+const MAX_PRODUCTS = 200;
 
 function parseProducts(data, store) {
   return data
@@ -27,6 +29,34 @@ function parseProducts(data, store) {
     .filter((p) => p.price && p.price > 0 && p.stock > 0);
 }
 
+async function fetchAllPages(store, query) {
+  const allProducts = [];
+  let from = 0;
+
+  while (from < MAX_PRODUCTS) {
+    const to = from + PAGE_SIZE - 1;
+    const vtexUrl = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(query)}&_from=${from}&_to=${to}`;
+    try {
+      const r = await fetch(vtexUrl, {
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        },
+      });
+      if (!r.ok) break;
+      const data = await r.json();
+      if (!data.length) break;
+      allProducts.push(...parseProducts(data, store));
+      if (data.length < PAGE_SIZE) break;
+      from += PAGE_SIZE;
+    } catch {
+      break;
+    }
+  }
+
+  return allProducts;
+}
+
 export async function onRequestGet(context) {
   const url = new URL(context.request.url);
   const q = (url.searchParams.get('q') || '').trim();
@@ -41,17 +71,9 @@ export async function onRequestGet(context) {
     : STORES;
 
   const promises = storesToSearch.map(async (store) => {
-    const vtexUrl = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(q)}&_from=0&_to=49`;
     try {
-      const r = await fetch(vtexUrl, {
-        headers: {
-          Accept: 'application/json',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        },
-      });
-      if (!r.ok) return { store: store.id, storeName: store.name, products: [], error: r.status };
-      const data = await r.json();
-      return { store: store.id, storeName: store.name, products: parseProducts(data, store) };
+      const products = await fetchAllPages(store, q);
+      return { store: store.id, storeName: store.name, products };
     } catch (err) {
       return { store: store.id, storeName: store.name, products: [], error: err.message };
     }
