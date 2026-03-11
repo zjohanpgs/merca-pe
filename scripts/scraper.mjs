@@ -138,6 +138,21 @@ async function upsertProduct(p) {
   return productId;
 }
 
+
+async function cleanupOldHistory() {
+  console.log('Cleaning up price_history older than 40 days...');
+  const cutoff = new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString();
+  const { error, count } = await supabase
+    .from('price_history')
+    .delete({ count: 'exact' })
+    .lt('recorded_at', cutoff);
+  if (error) {
+    console.warn('  cleanup error:', error.message);
+  } else {
+    console.log(`  Deleted ${count ?? 0} old price_history rows.`);
+  }
+}
+
 // --- Main ---
 async function main() {
   console.log(`Merca Scraper starting at ${new Date().toISOString()}`);
@@ -165,6 +180,8 @@ async function main() {
       await sleep(DELAY_MS);
     }
   }
+
+  await cleanupOldHistory();
 
   console.log(`\nDone! ${totalProducts} products found, ${totalUpserted} upserted.`);
 }
