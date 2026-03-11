@@ -13,9 +13,14 @@ app.get('/api/search', async (req, res) => {
   const q = (req.query.q || '').trim();
   if (!q) return res.json({ results: [] });
 
+  const storeFilter = (req.query.store || '').trim();
+  const storesToSearch = storeFilter
+    ? STORES.filter(s => s.id === storeFilter)
+    : STORES;
+
   try {
-    const promises = STORES.map(async (store) => {
-      const url = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(q)}&_from=0&_to=19`;
+    const promises = storesToSearch.map(async (store) => {
+      const url = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(q)}&_from=0&_to=49`;
       try {
         const r = await fetch(url, {
           headers: {

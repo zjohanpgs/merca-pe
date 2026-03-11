@@ -1,4 +1,3 @@
-// Cloudflare Pages Function — proxies VTEX search for 3 stores in parallel
 const STORES = [
   { id: 'metro',     name: 'Metro',     base: 'https://www.metro.pe' },
   { id: 'plazavea',  name: 'Plaza Vea', base: 'https://www.plazavea.com.pe' },
@@ -36,8 +35,13 @@ export async function onRequestGet(context) {
     return Response.json({ results: [] });
   }
 
-  const promises = STORES.map(async (store) => {
-    const vtexUrl = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(q)}&_from=0&_to=19`;
+  const storeFilter = (url.searchParams.get('store') || '').trim();
+  const storesToSearch = storeFilter
+    ? STORES.filter(s => s.id === storeFilter)
+    : STORES;
+
+  const promises = storesToSearch.map(async (store) => {
+    const vtexUrl = `${store.base}/api/catalog_system/pub/products/search?ft=${encodeURIComponent(q)}&_from=0&_to=49`;
     try {
       const r = await fetch(vtexUrl, {
         headers: {
