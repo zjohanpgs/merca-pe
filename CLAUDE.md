@@ -1,10 +1,10 @@
 # Merca.pe
 
-Comparador de precios de supermercados en Peru (Metro, Plaza Vea, Wong).
+Comparador de precios de supermercados en Peru (Metro y Plaza Vea). Wong fue removido porque bloquea /checkout/cart/add; re-integrar solo si se consigue acceso comercial con Cencosud.
 
 ## Stack
 - Frontend: Vite + React 19 + Tailwind CSS 3 + react-router-dom 7
-- Backend: Supabase (futuro) + Cloudflare Pages Functions
+- Backend: Supabase (schema + scraper listos; el scraper aun no corrio: faltan SUPABASE_SERVICE_KEY y SUPABASE_URL en GitHub secrets) + Cloudflare Pages Functions
 - Deploy: Cloudflare Pages
 
 ## Desarrollo
